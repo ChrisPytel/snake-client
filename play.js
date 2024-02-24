@@ -1,21 +1,34 @@
-//"play.js added - initial connection to snake server established"
+//"play.js A1 - add keypress handling via stdin and setupInput function and handleUserInput"
 //this is the client side of snake
 
 const net = require("net");
+const connect = require("./client.js");
 
-// establishes a connection with the game server
-const connect = function () {
-  // console.log(net.createConnection);
-  const conn = net.createConnection({
-    host: "172.28.207.93",    // IP address here,
-    port: "50541"            // PORT number here,
-  });
 
-  // interpret incoming data as text
-  conn.setEncoding("utf8");
-
-  return conn;
+// setup interface to handle user input from stdin
+const setupInput = function () {
+  const stdin = process.stdin;
+  stdin.setRawMode(true);
+  stdin.setEncoding("utf8");
+  stdin.resume();
+  stdin.on("data", handleUserInput); //our event listener for keyboard inputs
+  return stdin;
 };
 
+
+
+//used for checking our key inputs
+//
+const handleUserInput = function(key) {  
+  if (key === "a") {
+    console.log(`test`);
+  }   
+  if (key === '\u0003') {
+    process.exit();
+  }  
+};
+
+
 console.log("Connecting ...");
-connect();
+connect.connectToServer();
+setupInput();
