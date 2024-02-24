@@ -1,34 +1,15 @@
-//"play.js A1 - add keypress handling via stdin and setupInput function and handleUserInput"
-//this is the client side of snake
+//"play.js A2 - import input module and changed to object destructuring assignment"
+//this is the client side of snake, not the server side
 
-const net = require("net");
-const connect = require("./client.js");
+// const connect = require("./client.js");
+// const input = require("./input.js");    //Refactored below
 
-
-// setup interface to handle user input from stdin
-const setupInput = function () {
-  const stdin = process.stdin;
-  stdin.setRawMode(true);
-  stdin.setEncoding("utf8");
-  stdin.resume();
-  stdin.on("data", handleUserInput); //our event listener for keyboard inputs
-  return stdin;
-};
-
-
-
-//used for checking our key inputs
-//
-const handleUserInput = function(key) {  
-  if (key === "a") {
-    console.log(`test`);
-  }   
-  if (key === '\u0003') {
-    process.exit();
-  }  
-};
-
+const { connect } = require("./client.js");
+const { input } = require("./input.js"); //
+//Note: ^ This is called object destructuring assignment.
+//Rather than importing the entire file contents, it only imports the specific elements from that module we exported
+//Allows for directly calling the function --> setupInput(); instead of doing input.setupInput();
 
 console.log("Connecting ...");
-connect.connectToServer();
+connect();
 setupInput();
