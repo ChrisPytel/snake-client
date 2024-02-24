@@ -1,4 +1,4 @@
-//"input.js A1 - connection object passed in"
+//"input.js A2 - banter lines added, also cases for capital letters"
 
 // Stores the active TCP connection object.
 let connection;
@@ -17,22 +17,35 @@ const setupInput = function (conn) {
 
 //used for checking our key inputs
 const handleUserInput = function(keyPress) {  
-  if (keyPress === "w") {
+  if (keyPress === "w" || keyPress === "W" ) {
     console.log(`Moved up`);
     connection.write("Move: up");
   }   
-  if (keyPress === "a") {
+  if (keyPress === "a" || keyPress === "A" ) {
     console.log(`Moved left`);
     connection.write("Move: left");
   }  
-  if (keyPress === "s") {
+  if (keyPress === "s" || keyPress === "S" ) {
     console.log(`Moved down`);
     connection.write("Move: down");
   }   
-  if (keyPress === "d") {
+  if (keyPress === "d" || keyPress === "D" ) {
     console.log(`Moved right`);
     connection.write("Move: right");
   }   
+  if (keyPress === "j" || keyPress === "J" ) {
+    console.log(`Banter line #1`);
+    connection.write("Say: Top of the mornin");
+  }   
+  if (keyPress === "k" || keyPress === "K" ) {
+    console.log(`Banter line #2`);
+    connection.write("Say: This one is mine");
+  }   
+  if (keyPress === "l" || keyPress === "L" ) {
+    console.log(`Banter line #3`);
+    connection.write("Say: Good Game!");
+  }   
+
   if (keyPress === '\u0003') {
     process.exit();
   }  
