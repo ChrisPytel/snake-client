@@ -1,42 +1,34 @@
-//constants.js added - stores a series of constant variables used across files
-
+//"constants.js A1 - refactor and applied lint rules"
 
 const IP = "172.28.207.93";
 const PORT = "50541";
 const threeInitials = "CHR";
-
-const stdin = process.stdin; //from input.js initially
-// const connReturn = connect(); // from play.js
+const stdin = process.stdin; //initially from input.js
 
 const actions = {
-  move_up: {
+  moveUp: {
     primary: "w",
     alt: "W",
     toServer: "Move: up",
     toPrint: "Snake moved up"
   },
-  move_down: {
+  moveDown: {
     primary: "s",
     alt: "S",
     toServer: "Move: down",
     toPrint: "Snake moved down"
   },
-  move_left: {
+  moveLeft: {
     primary: "a",
     alt: "A",
     toServer: "Move: left",
     toPrint: "Snake moved left"
   },
-  move_right: {
+  moveRight: {
     primary: "d",
     alt: "D",
     toServer: "Move: right",
     toPrint: "Snake moved right"
-  },
-  doubleSpeed: {
-    primary: "shift",
-    toServer: "Move: right",
-    toPrint: "shift pressed"
   },
   msg1: {
     primary: "j",
@@ -57,14 +49,25 @@ const actions = {
     primary: "\u0003",
     toPrint: "Exiting game via CTRL+C"
   }
+};
 
-}
+const welcomeMessage = `\nSuccessfully connected to server!\n
+Movement controls are set to:\n
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n
+${actions.moveUp.primary}: To move up\n
+${actions.moveDown.primary}: To move down\n
+${actions.moveLeft.primary}: To move left\n
+${actions.moveRight.primary}: To move right\n                        
+${actions.msg1.primary}: Announce message 1\n
+${actions.msg2.primary}: Announce message 2\n
+${actions.msg3.primary}: Announce message 3\n                      
+Control + C: to exit game\n`;
 
-
-module.exports = {
+module.exports = { //exports our consts and objects to communicate across modules
   IP,
   PORT,
   threeInitials,
   stdin,
-  actions  
+  actions,
+  welcomeMessage
 };

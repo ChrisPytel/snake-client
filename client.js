@@ -1,34 +1,27 @@
-//"client.js A2 - add move commands"
+//"client.js A4 - refactor and applied lint rules"
 
 const net = require("net");
-let threeInitials = "CHR";
+const { IP, PORT, threeInitials, welcomeMessage } = require("./constants");
 
 // establishes a connection with the game server
-const connectToServer = function () {
+const connect = function() {
   const conn = net.createConnection({
-    host: "172.28.207.93",    // IP address here,
-    port: "50541"            // PORT number here,
+    host: IP,
+    port: PORT
   });
-  conn.setEncoding("utf8");
-
+  conn.setEncoding("utf8"); //decodes our inputs into readable characters
   conn.on("connect", () => {
-    console.log("Successfully connected to server");
-    conn.write("Hello from client!");
-    conn.write(`Name: ${threeInitials}`)
-
-    // conn.write("Move: up"); //sending the server the following strings act as movement commands
-    // conn.write("Move: down"); //may not initially be noticable
-    // conn.write("Move: left");
-    // conn.write("Move: right");
+    console.log(welcomeMessage);
+    conn.write(`Name: ${threeInitials}`);
   });
-
-
-  //return conn; //commented out the return call to see what happens
+  //added to display timeout and serverside death messages
+  conn.on("data", (data) => {
+    console.log(data);
+    process.exit(); //added a connection termination after a gameover message
+  });
+  return conn;
 };
 
-
-module.exports = { //exports our connect function to communicate to play.js
-  connectToServer
-}; 
-
-console.log(connectToServer);
+module.exports = { //exports our connect function to communicate across modules
+  connect
+};
