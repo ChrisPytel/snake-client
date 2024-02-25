@@ -1,13 +1,13 @@
-//"input.js A2 - banter lines added, also cases for capital letters"
+//"input.js A3 - refactored constants module"
 
 // Stores the active TCP connection object.
 let connection;
 
+const { actions, stdin } = require("./constants");
 
 // setup interface to handle user input from stdin
 const setupInput = function (conn) {
   connection = conn;
-  const stdin = process.stdin;
   stdin.setRawMode(true);
   stdin.setEncoding("utf8");
   stdin.resume();
@@ -16,37 +16,34 @@ const setupInput = function (conn) {
 };
 
 //used for checking our key inputs
-const handleUserInput = function(keyPress) {  
-  if (keyPress === "w" || keyPress === "W" ) {
-    console.log(`Moved up`);
-    connection.write("Move: up");
+const handleUserInput = function(keyPress) { 
+  if (keyPress === actions.move_up.primary || keyPress === actions.move_up.alt) {
+    console.log(actions.move_up.toPrint);
+    connection.write(actions.move_up.toServer);
   }   
-  if (keyPress === "a" || keyPress === "A" ) {
-    console.log(`Moved left`);
-    connection.write("Move: left");
+  if (keyPress === actions.move_down.primary || keyPress === actions.move_down.alt) {
+    console.log(actions.move_down.toPrint);
+    connection.write(actions.move_down.toServer);
+  } 
+  if (keyPress === actions.move_left.primary || keyPress === actions.move_left.alt) {
+    console.log(actions.move_left.toPrint);
+    connection.write(actions.move_left.toServer);
+  } 
+  if (keyPress === actions.move_right.primary || keyPress === actions.move_right.alt) {
+    console.log(actions.move_right.toPrint);
+    connection.write(actions.move_right.toServer);
+  }   
+  if (keyPress === actions.msg1.primary || keyPress === actions.msg1.primary) {
+    connection.write(actions.msg1.toServer);
   }  
-  if (keyPress === "s" || keyPress === "S" ) {
-    console.log(`Moved down`);
-    connection.write("Move: down");
+  if (keyPress === actions.msg2.primary || keyPress === actions.msg2.primary) {
+    connection.write(actions.msg2.toServer);
   }   
-  if (keyPress === "d" || keyPress === "D" ) {
-    console.log(`Moved right`);
-    connection.write("Move: right");
+  if (keyPress === actions.msg3.primary || keyPress === actions.msg3.primary) {
+    connection.write(actions.msg3.toServer);
   }   
-  if (keyPress === "j" || keyPress === "J" ) {
-    console.log(`Banter line #1`);
-    connection.write("Say: Top of the mornin");
-  }   
-  if (keyPress === "k" || keyPress === "K" ) {
-    console.log(`Banter line #2`);
-    connection.write("Say: This one is mine");
-  }   
-  if (keyPress === "l" || keyPress === "L" ) {
-    console.log(`Banter line #3`);
-    connection.write("Say: Good Game!");
-  }   
-
-  if (keyPress === '\u0003') {
+  if (keyPress === actions.exit.primary) {
+    console.log(actions.exit.toPrint);
     process.exit();
   }  
 };
